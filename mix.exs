@@ -25,8 +25,8 @@ defmodule ExLCD.Mixfile do
 
   defp deps do
     [
-      {:elixir_ale, "~> 0.6.1"},
-      {:ex_doc, "~> 0.11", only: [:dev]}
+      {:elixir_ale, "~> 1.2.1"},
+      {:ex_doc, "~> 0.39", only: [:dev]}
     ]
   end
 
