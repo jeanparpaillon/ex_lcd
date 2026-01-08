@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # Sample HD44780 configuration for a 2x20 display connected to
 # my Raspberry Pi0W. The 4 bit interface requires 6 GPIO pins
@@ -16,4 +16,4 @@ use Mix.Config
 #   font_5x10: false
 # }
 
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

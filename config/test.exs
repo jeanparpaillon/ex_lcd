@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 config :ex_lcd, :gpio, ExLCD.GPIO
 config :ex_lcd, :i2c, ExLCD.I2C

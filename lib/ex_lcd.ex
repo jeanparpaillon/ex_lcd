@@ -30,6 +30,13 @@ defmodule ExLCD do
   @type bitmap :: list
 
   defmodule LCDState do
+    @type t :: %__MODULE__{
+            driver: module | nil,
+            config: map | nil,
+            display: term | nil,
+            callback: function | nil
+          }
+
     defstruct driver: nil, config: nil, display: nil, callback: nil
   end
 
@@ -53,10 +60,10 @@ defmodule ExLCD do
   end
 
   @doc false
-  @spec init(term) :: {:ok, term}
-  def init(state) do
-    state = %LCDState{state | display: apply(state.driver, :start, [state.config])}
-    state = %LCDState{state | callback: apply(state.driver, :execute, [])}
+  @spec init(LCDState.t()) :: {:ok, LCDState.t()}
+  def init(%LCDState{driver: driver, config: config} = state) do
+    state = %LCDState{state | display: apply(driver, :start, [config])}
+    state = %LCDState{state | callback: apply(driver, :execute, [])}
     {:ok, state}
   end
 
@@ -282,7 +289,7 @@ defmodule ExLCD do
 
   defp stop(msg), do: GenServer.stop(__MODULE__, msg)
 
-  defp updated_display_state(state, display) do
+  defp updated_display_state(%LCDState{} = state, display) do
     %LCDState{state | display: display}
   end
 end
