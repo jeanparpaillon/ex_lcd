@@ -3,9 +3,9 @@ defmodule ExLCD.IO do
 
   defmacro __using__(_) do
     quote do
-      @gpio Application.get_env(:ex_lcd, :gpio, ElixirALE.GPIO)
-      @i2c Application.get_env(:ex_lcd, :i2c, ElixirALE.I2C)
-      @spi Application.get_env(:ex_lcd, :spi, ElixirALE.SPI)
+      @gpio Application.compile_env(:ex_lcd, :gpio, ElixirALE.GPIO)
+      @i2c Application.compile_env(:ex_lcd, :i2c, ElixirALE.I2C)
+      @spi Application.compile_env(:ex_lcd, :spi, ElixirALE.SPI)
     end
   end
 end
@@ -29,10 +29,16 @@ defmodule ExLCD.I2C do
   @moduledoc false
   use GenServer
 
+  def init(args) do
+    {:ok, args}
+  end
 end
 
 defmodule ExLCD.SPI do
   @moduledoc false
   use GenServer
 
+  def init(args) do
+    {:ok, args}
+  end
 end

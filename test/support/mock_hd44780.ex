@@ -1,12 +1,16 @@
 defmodule MockHD44780 do
   use GenServer
-  use Bitwise
+  import Bitwise
 
   @noisy false
 
   def start_link(display_state) do
     state = %{display_state: display_state, stack: [], register_state: 0x0000}
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
+  end
+
+  def init(args) do
+    {:ok, args}
   end
 
   def status() do
@@ -31,7 +35,7 @@ defmodule MockHD44780 do
   def write_bit(state, pin, value) do
     xform = case value do
       1   -> fn(x,y) -> x ||| y end
-      0   -> fn(x,y) -> x &&& (~~~y) end
+      0   -> fn(x,y) -> x &&& bnot(y) end
     end
     noise "Pin(#{pin}) #{value} [#{hex(state.register_state)}]"
     set_bit(state, pin, value, xform)

@@ -70,7 +70,7 @@ defmodule ExLCD.HD44780 do
   * Raspberry Pi Example Application with nerves
   """
 
-  use Bitwise
+  import Bitwise
   use ExLCD.Driver
   use ExLCD.IO
 
@@ -354,7 +354,7 @@ defmodule ExLCD.HD44780 do
 
   # Switch a register flag bit OFF(0). Return the updated state.
   defp disable_feature_flag(state, feature, flag) do
-    %{state | feature => (state[feature] &&& ~~~flag)}
+    %{state | feature => (state[feature] &&& bnot(flag))}
     |>  set_feature(feature)
   end
 
